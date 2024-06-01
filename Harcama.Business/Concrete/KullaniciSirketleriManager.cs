@@ -1,0 +1,46 @@
+﻿using Harcama.Business.Abstract;
+using Harcama.DataAccess.Abstract;
+using Harcama.Entities.Concrete;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Harcama.Business.Concrete
+{
+    public class KullaniciSirketleriManager : IKullaniciSirketleriServices
+    {
+        private readonly IKullaniciSirketleriRepository _kullaniciSirketleriRepository;
+
+        public KullaniciSirketleriManager(IKullaniciSirketleriRepository kullaniciSirketleriRepository)
+        {
+            _kullaniciSirketleriRepository = kullaniciSirketleriRepository;
+        }
+
+        public async Task<bool> AddAsync(KullaniciSirketleri kullaniciSirketleri)
+        {
+       return  await  _kullaniciSirketleriRepository.AddAsync(kullaniciSirketleri);
+        }
+
+        public IQueryable<KullaniciSirketleri> GetAll()
+        {
+           return _kullaniciSirketleriRepository.GetAll();
+        }
+
+        public bool Remove(KullaniciSirketleri kullaniciSirketleri)
+        {
+       return     _kullaniciSirketleriRepository.Remove(kullaniciSirketleri);
+        }
+
+        public async Task<bool> RemoveAsync(string id)
+        {
+         return await   _kullaniciSirketleriRepository.RemoveAsync(id);
+        }
+
+        public bool Update(KullaniciSirketleri kullaniciSirketleri)
+        {
+        return    _kullaniciSirketleriRepository.Update(kullaniciSirketleri);
+        }
+    }
+}

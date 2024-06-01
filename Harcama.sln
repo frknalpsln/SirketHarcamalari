@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34616.47
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Harcama.Entities", "Harcama.Entities\Harcama.Entities.csproj", "{EF670E85-0B9D-49B9-B4CD-10F62CCB6848}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Harcama.DataAccess", "Harcama.DataAccess\Harcama.DataAccess.csproj", "{70D814B0-F635-48C1-B360-D5E9DB9F4472}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Harcama.Business", "Harcama.Business\Harcama.Business.csproj", "{6CAFAA19-D7C3-4CCD-83C9-EC86D8B9FBBF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Harcama.WebAPI", "Harcama.WebAPI\Harcama.WebAPI.csproj", "{E6FECA76-8A01-4648-8E68-C5D169C6176A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EF670E85-0B9D-49B9-B4CD-10F62CCB6848}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF670E85-0B9D-49B9-B4CD-10F62CCB6848}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF670E85-0B9D-49B9-B4CD-10F62CCB6848}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF670E85-0B9D-49B9-B4CD-10F62CCB6848}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70D814B0-F635-48C1-B360-D5E9DB9F4472}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70D814B0-F635-48C1-B360-D5E9DB9F4472}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70D814B0-F635-48C1-B360-D5E9DB9F4472}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70D814B0-F635-48C1-B360-D5E9DB9F4472}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6CAFAA19-D7C3-4CCD-83C9-EC86D8B9FBBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6CAFAA19-D7C3-4CCD-83C9-EC86D8B9FBBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6CAFAA19-D7C3-4CCD-83C9-EC86D8B9FBBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6CAFAA19-D7C3-4CCD-83C9-EC86D8B9FBBF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6FECA76-8A01-4648-8E68-C5D169C6176A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6FECA76-8A01-4648-8E68-C5D169C6176A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6FECA76-8A01-4648-8E68-C5D169C6176A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6FECA76-8A01-4648-8E68-C5D169C6176A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0A3FB5A7-EEDA-457B-87FE-31D4BEC1FE71}
+	EndGlobalSection
+EndGlobal
