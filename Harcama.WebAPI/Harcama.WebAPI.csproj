@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Harcama.Business\Harcama.Business.csproj" />
     <ProjectReference Include="..\Harcama.DataAccess\Harcama.DataAccess.csproj" />
   </ItemGroup>
 

@@ -11,7 +11,7 @@ namespace Harcama.Entities.Concrete
     {
        
 
-        public Kullanici Kullanici { get; set; }
+        public AppUser Kullanici { get; set; }
         public Sirket Sirket { get; set; }
     }
 }

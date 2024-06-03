@@ -10,6 +10,6 @@ namespace Harcama.Entities.Concrete
     public class HarcamaTalepleri : BaseEntity
     {
         public DateTime Tarih {  get; set; }
-        public Kullanici TalepteBulunan { get; set; }
+        public AppUser TalepteBulunan { get; set; }
     }
 }

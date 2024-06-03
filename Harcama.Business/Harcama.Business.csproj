@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="TS.Result" Version="8.0.6" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Harcama.DataAccess\Harcama.DataAccess.csproj" />
     <ProjectReference Include="..\Harcama.Entities\Harcama.Entities.csproj" />
   </ItemGroup>
