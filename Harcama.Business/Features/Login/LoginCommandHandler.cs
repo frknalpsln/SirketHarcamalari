@@ -12,7 +12,7 @@ internal class LoginCommandHandler(
 {
     public async Task<Result<LoginCommandResponse>> Handle(LoginCommand request, CancellationToken cancellationToken)
     {
-        AppUser appUser = await userManager.Users.FirstOrDefaultAsync(p=>p.UserName == request.UserNameOrEmail || p.Email == request.UserNameOrEmail, cancellationToken );
+        AppUser? appUser = await userManager.Users.FirstOrDefaultAsync(p=>p.UserName == request.UserNameOrEmail || p.Email == request.UserNameOrEmail, cancellationToken );
 
         if(appUser is null)
         {

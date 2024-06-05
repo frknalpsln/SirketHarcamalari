@@ -31,7 +31,7 @@ namespace Harcama.DataAccess.Concrete
             }).AddEntityFrameworkStores<HarcamaDbContext>();
 
 
-      
+
 
             services.AddScoped<IHarcamaBirimleriRepository, EfHarcamaBirimleriRepository>();
             services.AddScoped<IHarcamaTalepleriRepository, EfHarcamaTalepleriRepository>();

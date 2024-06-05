@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Harcama.DataAccess.Migrations
 {
     [DbContext(typeof(HarcamaDbContext))]
-    [Migration("20240603164221_mig1")]
+    [Migration("20240604125440_mig1")]
     partial class mig1
     {
         /// <inheritdoc />
@@ -109,6 +109,9 @@ namespace Harcama.DataAccess.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("text");
 
+                    b.Property<Guid>("SirketId")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("Soyadi")
                         .IsRequired()
                         .HasColumnType("text");
@@ -132,6 +135,8 @@ namespace Harcama.DataAccess.Migrations
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex");
+
+                    b.HasIndex("SirketId");
 
                     b.ToTable("AspNetUsers", (string)null);
                 });
@@ -172,15 +177,22 @@ namespace Harcama.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("TalepteBulunanId")
-                        .HasColumnType("uuid");
+                    b.Property<string>("Icerik")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<bool>("OnaylandiMi")
+                        .HasColumnType("boolean");
 
                     b.Property<DateTime>("Tarih")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("TalepteBulunanId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("HarcamaTalepleri");
                 });
@@ -396,15 +408,26 @@ namespace Harcama.DataAccess.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Harcama.Entities.Concrete.HarcamaTalepleri", b =>
+            modelBuilder.Entity("Harcama.Entities.Concrete.AppUser", b =>
                 {
-                    b.HasOne("Harcama.Entities.Concrete.AppUser", "TalepteBulunan")
+                    b.HasOne("Harcama.Entities.Concrete.Sirket", "Sirket")
                         .WithMany()
-                        .HasForeignKey("TalepteBulunanId")
+                        .HasForeignKey("SirketId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("TalepteBulunan");
+                    b.Navigation("Sirket");
+                });
+
+            modelBuilder.Entity("Harcama.Entities.Concrete.HarcamaTalepleri", b =>
+                {
+                    b.HasOne("Harcama.Entities.Concrete.AppUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Harcama.Entities.Concrete.KullaniciBirimYetkileri", b =>

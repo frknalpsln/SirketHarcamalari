@@ -9,7 +9,12 @@ namespace Harcama.Entities.Concrete
 {
     public class HarcamaTalepleri : BaseEntity
     {
+        public string Icerik { get; set; }
+        public bool OnaylandiMi { get; set; }
+
         public DateTime Tarih {  get; set; }
-        public AppUser TalepteBulunan { get; set; }
+
+        public Guid UserId { get; set; }
+        public AppUser User { get; set; }
     }
 }

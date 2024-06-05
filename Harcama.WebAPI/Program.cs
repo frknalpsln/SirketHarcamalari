@@ -2,6 +2,7 @@ using Harcama.Business;
 using Harcama.DataAccess.Concrete;
 using Harcama.Entities.Concrete;
 using Harcama.WebAPI;
+using Microsoft.AspNetCore.Identity;
 using System;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,7 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDataAccessServices();
 builder.Services.AddBusinessServices();
 builder.Services.AddCors(options => options.AddDefaultPolicy(policy => policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
-builder.Services.AddAuthorization();
+builder.Services.AddAuthorizationBuilder();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -26,12 +27,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-app.UseCors();
 app.UseHttpsRedirection();
+app.UseCors();
 
+app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
 
-Helper.CreateUsersAsync(app).Wait();
+await Helper.CreateUsersAsync(app);
 app.Run();

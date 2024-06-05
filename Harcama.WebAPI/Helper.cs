@@ -1,5 +1,6 @@
 ﻿using Harcama.Entities.Concrete;
 using Microsoft.AspNetCore.Identity;
+using TS.Result;
 
 namespace Harcama.WebAPI
 {
@@ -7,59 +8,34 @@ namespace Harcama.WebAPI
     {
         public static async Task CreateUsersAsync(WebApplication app)
         {
+
             using (var scoped = app.Services.CreateScope())
             {
                 var userManager = scoped.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
-                var roleManager = scoped.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-                // "Admin" rolünü oluştur
-                if (!await roleManager.RoleExistsAsync("Admin"))
+                if (!userManager.Users.Any())
                 {
-                    await roleManager.CreateAsync(new IdentityRole("Admin"));
-                }
-
-                // "Muhasebe" rolünü oluştur
-                if (!await roleManager.RoleExistsAsync("Muhasebe"))
-                {
-                    await roleManager.CreateAsync(new IdentityRole("Muhasebe"));
-                }
-
-                // "admin" kullanıcısını oluştur ve "Admin" rolünü ata
-                var adminUser = new AppUser
-                {
-                    Adi = "Furkan",
-                    Soyadi = "Alpaslan",
-                    Email = "admin@admin.com",
-                    UserName = "admin"
-                };
-                var adminPassword = "Admin123!";
-                if (await userManager.FindByNameAsync(adminUser.UserName) == null)
-                {
-                    var result = await userManager.CreateAsync(adminUser, adminPassword);
-                    if (result.Succeeded)
+                    string[][] usersInfo = new string[][]
                     {
-                        await userManager.AddToRoleAsync(adminUser, "Admin");
-                    }
-                }
+            new string[] { "Admin", "Admin", "11164004322", "Ankara", "admin@admin.com", "admin", "Admin123" },
+            new string[] { "Muhasebe", "Muhasebe", "11164004323", "Ankara", "muhasebe@muhasebe.com", "muhasebe", "Muhasebe123" }
+                    };
 
-                // "muhasebe" kullanıcısını oluştur ve "Muhasebe" rolünü ata
-                var muhasebeUser = new AppUser
-                {
-                    Adi = "John",
-                    Soyadi = "Doe",
-                    Email = "muhasebe@example.com",
-                    UserName = "muhasebe"
-                };
-                var muhasebePassword = "Muhasebe123!";
-                if (await userManager.FindByNameAsync(muhasebeUser.UserName) == null)
-                {
-                    var result = await userManager.CreateAsync(muhasebeUser, muhasebePassword);
-                    if (result.Succeeded)
+                    foreach (var userInfo in usersInfo)
                     {
-                        await userManager.AddToRoleAsync(muhasebeUser, "Muhasebe");
+                        await userManager.CreateAsync(new AppUser
+                        {
+                            Adi = userInfo[0],
+                            Soyadi = userInfo[1],
+                            Tc = userInfo[2],
+                            Adres = userInfo[3],
+                            Email = userInfo[4],
+                            UserName = userInfo[5]
+                        }, userInfo[6]);
                     }
                 }
             }
+
         }
     }
 }
