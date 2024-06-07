@@ -1,5 +1,6 @@
 ﻿using Harcama.Business.Abstract;
 using Harcama.DataAccess.Abstract;
+using Harcama.DataAccess.Concrete.EntityFramework;
 using Harcama.Entities.Concrete;
 using System;
 using System.Collections.Generic;
@@ -28,6 +29,11 @@ namespace Harcama.Business.Concrete
            return _projeTanimlariRepository.GetAll(); 
         }
 
+        public Task<ProjeTanimlari> GetById(string id)
+        {
+            return _projeTanimlariRepository.GetSingleAsync(id);
+        }
+
         public bool Remove(ProjeTanimlari projeTanimlari)
         {
            return _projeTanimlariRepository.Remove(projeTanimlari);
@@ -36,6 +42,11 @@ namespace Harcama.Business.Concrete
         public async Task<bool> RemoveAsync(string id)
         {
         return  await _projeTanimlariRepository.RemoveAsync(id);
+        }
+
+        public Task<int> SaveAsync()
+        {
+            return _projeTanimlariRepository.SaveAsync();
         }
 
         public bool Update(ProjeTanimlari projeTanimlari)

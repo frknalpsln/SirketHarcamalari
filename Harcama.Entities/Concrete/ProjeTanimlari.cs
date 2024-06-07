@@ -9,12 +9,13 @@ namespace Harcama.Entities.Concrete
 {
     public class ProjeTanimlari : BaseEntity
     {
-        public string ProjeAdi { get ; set; }
+        public string ProjeAdi { get; set; }
         public string ProjeTanimi { get; set; }
         public DateTime ProjeBaslangic { get; set; }
         public string ProjeYetkilisi { get; set; }
 
-   
+        public Guid SirketId { get; set; }
+        public Guid BirimId { get; set; }
 
         public Sirket Sirket { get; set; }
         public HarcamaBirimleri Birim { get; set; }

@@ -1,5 +1,6 @@
 ﻿using Harcama.Business.Abstract;
 using Harcama.DataAccess.Abstract;
+using Harcama.DataAccess.Concrete.EntityFramework;
 using Harcama.Entities.Concrete;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,16 @@ namespace Harcama.Business.Concrete
         public SirketManager(ISirketRepository sirketRepository)
         {
             _sirketRepository = sirketRepository;
+        }
+
+        public Task<Sirket> GetById(string id)
+        {
+            return _sirketRepository.GetSingleAsync(id);
+        }
+
+        public Task<int> SaveAsync()
+        {
+            return _sirketRepository.SaveAsync();
         }
 
         async Task<bool> ISirketServices.AddAsync(Sirket sirket)

@@ -11,9 +11,13 @@ namespace Harcama.Business.Abstract
     {
         IQueryable<ProjeTanimlari> GetAll();
 
+        Task<ProjeTanimlari> GetById(string id);
+
         Task<bool> AddAsync(ProjeTanimlari projeTanimlari);
         bool Remove(ProjeTanimlari projeTanimlari);
         Task<bool> RemoveAsync(string id);
         bool Update(ProjeTanimlari projeTanimlari);
+        Task<int> SaveAsync();
+
     }
 }

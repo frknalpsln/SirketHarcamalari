@@ -11,9 +11,13 @@ namespace Harcama.Business.Abstract
     {
         IQueryable<KullaniciBirimYetkileri> GetAll();
 
+        Task<KullaniciBirimYetkileri> GetById(string id);
+
         Task<bool> AddAsync(KullaniciBirimYetkileri kullaniciBirimYetkileri);
         bool Remove(KullaniciBirimYetkileri kullaniciBirimYetkileri);
         Task<bool> RemoveAsync(string id);
         bool Update(KullaniciBirimYetkileri kullaniciBirimYetkileri);
+        Task<int> SaveAsync();
+
     }
 }

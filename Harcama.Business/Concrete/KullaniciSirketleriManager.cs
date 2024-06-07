@@ -1,5 +1,6 @@
 ﻿using Harcama.Business.Abstract;
 using Harcama.DataAccess.Abstract;
+using Harcama.DataAccess.Concrete.EntityFramework;
 using Harcama.Entities.Concrete;
 using System;
 using System.Collections.Generic;
@@ -28,6 +29,11 @@ namespace Harcama.Business.Concrete
            return _kullaniciSirketleriRepository.GetAll();
         }
 
+        public Task<KullaniciSirketleri> GetById(string id)
+        {
+            return _kullaniciSirketleriRepository.GetSingleAsync(id);
+        }
+
         public bool Remove(KullaniciSirketleri kullaniciSirketleri)
         {
        return     _kullaniciSirketleriRepository.Remove(kullaniciSirketleri);
@@ -36,6 +42,11 @@ namespace Harcama.Business.Concrete
         public async Task<bool> RemoveAsync(string id)
         {
          return await   _kullaniciSirketleriRepository.RemoveAsync(id);
+        }
+
+        public Task<int> SaveAsync()
+        {
+            return _kullaniciSirketleriRepository.SaveAsync();
         }
 
         public bool Update(KullaniciSirketleri kullaniciSirketleri)

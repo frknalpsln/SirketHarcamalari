@@ -11,9 +11,12 @@ namespace Harcama.Business.Abstract
     {
         IQueryable<Sirket> GetAll();
 
+        Task<Sirket> GetById(string id);
+
         Task<bool> AddAsync(Sirket sirket);
         bool Remove(Sirket sirket);
         Task<bool> RemoveAsync(string id);
         bool Update(Sirket sirket);
+        Task<int> SaveAsync();
     }
 }

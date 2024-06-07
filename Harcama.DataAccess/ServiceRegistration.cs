@@ -17,7 +17,7 @@ namespace Harcama.DataAccess.Concrete
 {
     public static class ServiceRegistration
     {
-        public static IServiceCollection AddDataAccessServices(this IServiceCollection services)
+        public static void AddDataAccessServices(this IServiceCollection services)
         {
             services.AddDbContext<HarcamaDbContext>(options => options.UseNpgsql(Configuration.ConnectionString));
 
@@ -43,7 +43,6 @@ namespace Harcama.DataAccess.Concrete
 
             services.AddScoped<IJwtProvider, JwtProvider>();
 
-            return services;
 
         }
     }

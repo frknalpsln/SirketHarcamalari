@@ -7,12 +7,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="TS.Result" Version="8.0.6" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Harcama.DataAccess\Harcama.DataAccess.csproj" />
     <ProjectReference Include="..\Harcama.Entities\Harcama.Entities.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Features\HarcamaTalepleriCqrs\CreateHarcamaTalepleri\" />
+    <Folder Include="Features\HarcamaTalepleriCqrs\GetAllHarcamaTalepleri\" />
+    <Folder Include="Features\HarcamaTalepleriCqrs\GetByIdHarcamaTalepleri\" />
+    <Folder Include="Features\HarcamaTalepleriCqrs\UpdateHarcamaTalepleri\" />
+    <Folder Include="Features\HarcamaTalepleriCqrs\RemoveHarcamaTalepleri\" />
   </ItemGroup>
 
 </Project>

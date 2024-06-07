@@ -12,9 +12,12 @@ namespace Harcama.Business.Abstract
     {
         IQueryable<HarcamaBirimleri> GetAll();
         
+        Task<HarcamaBirimleri> GetById (string id);
+        
        Task<bool> AddAsync(HarcamaBirimleri harcamaBirimleri);
-        bool Remove(HarcamaBirimleri harcamaBirimleri);
         Task<bool> RemoveAsync(string id);
+        bool Remove(HarcamaBirimleri harcamaBirimleri);
         bool Update(HarcamaBirimleri harcamaBirimleri);
+        Task<int> SaveAsync();
     }
 }

@@ -23,24 +23,35 @@ namespace Harcama.Business.Concrete
             return await _harcamaBirimleriRepository.AddAsync(harcamaBirimleri);
         }
 
-        public  IQueryable<HarcamaBirimleri> GetAll()
+        public IQueryable<HarcamaBirimleri> GetAll()
         {
-            return _harcamaBirimleriRepository.GetAll() ;     
+            return _harcamaBirimleriRepository.GetAll();
+        }
+
+        public Task<HarcamaBirimleri> GetById(string id)
+        {
+            return _harcamaBirimleriRepository.GetSingleAsync(id);
+
         }
 
         public bool Remove(HarcamaBirimleri harcamaBirimleri)
         {
-         return   _harcamaBirimleriRepository.Remove(harcamaBirimleri);
+            return _harcamaBirimleriRepository.Remove(harcamaBirimleri);
         }
 
         public async Task<bool> RemoveAsync(string id)
         {
-        return await  _harcamaBirimleriRepository.RemoveAsync(id);
+            return await _harcamaBirimleriRepository.RemoveAsync(id);
+        }
+
+        public Task<int> SaveAsync()
+        {
+          return  _harcamaBirimleriRepository.SaveAsync();
         }
 
         public bool Update(HarcamaBirimleri harcamaBirimleri)
         {
-          return  _harcamaBirimleriRepository.Update(harcamaBirimleri);
+            return _harcamaBirimleriRepository.Update(harcamaBirimleri);
         }
     }
 }
