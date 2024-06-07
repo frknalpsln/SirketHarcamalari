@@ -28,35 +28,32 @@ namespace Harcama.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "HarcamaBirimleri",
+                name: "AspNetUsers",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    BirimAdi = table.Column<string>(type: "text", nullable: false),
-                    BirimKodu = table.Column<string>(type: "text", nullable: false),
-                    BirimYetkili = table.Column<string>(type: "text", nullable: false),
-                    BirimYetkiliTelefon = table.Column<string>(type: "text", nullable: false),
-                    Durum = table.Column<bool>(type: "boolean", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_HarcamaBirimleri", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Sirketler",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    SirketAdi = table.Column<string>(type: "text", nullable: false),
-                    SirketKodu = table.Column<string>(type: "text", nullable: false),
-                    Durum = table.Column<bool>(type: "boolean", nullable: false),
+                    Tc = table.Column<string>(type: "text", nullable: false),
+                    Adi = table.Column<string>(type: "text", nullable: false),
+                    Soyadi = table.Column<string>(type: "text", nullable: false),
                     Adres = table.Column<string>(type: "text", nullable: false),
-                    TelefonNo = table.Column<string>(type: "text", nullable: false)
+                    UserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
+                    Email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(type: "boolean", nullable: false),
+                    PasswordHash = table.Column<string>(type: "text", nullable: true),
+                    SecurityStamp = table.Column<string>(type: "text", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "text", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "text", nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(type: "boolean", nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(type: "boolean", nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    LockoutEnabled = table.Column<bool>(type: "boolean", nullable: false),
+                    AccessFailedCount = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Sirketler", x => x.Id);
+                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -76,71 +73,6 @@ namespace Harcama.DataAccess.Migrations
                         name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetUsers",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Tc = table.Column<string>(type: "text", nullable: false),
-                    Adi = table.Column<string>(type: "text", nullable: false),
-                    Soyadi = table.Column<string>(type: "text", nullable: false),
-                    Adres = table.Column<string>(type: "text", nullable: false),
-                    SirketId = table.Column<Guid>(type: "uuid", nullable: false),
-                    UserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
-                    NormalizedUserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
-                    Email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
-                    NormalizedEmail = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
-                    EmailConfirmed = table.Column<bool>(type: "boolean", nullable: false),
-                    PasswordHash = table.Column<string>(type: "text", nullable: true),
-                    SecurityStamp = table.Column<string>(type: "text", nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "text", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "text", nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(type: "boolean", nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(type: "boolean", nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
-                    LockoutEnabled = table.Column<bool>(type: "boolean", nullable: false),
-                    AccessFailedCount = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AspNetUsers_Sirketler_SirketId",
-                        column: x => x.SirketId,
-                        principalTable: "Sirketler",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ProjeTanimlari",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    ProjeAdi = table.Column<string>(type: "text", nullable: false),
-                    ProjeTanimi = table.Column<string>(type: "text", nullable: false),
-                    ProjeBaslangic = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    ProjeYetkilisi = table.Column<string>(type: "text", nullable: false),
-                    SirketId = table.Column<Guid>(type: "uuid", nullable: false),
-                    BirimId = table.Column<Guid>(type: "uuid", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ProjeTanimlari", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ProjeTanimlari_HarcamaBirimleri_BirimId",
-                        column: x => x.BirimId,
-                        principalTable: "HarcamaBirimleri",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ProjeTanimlari_Sirketler_SirketId",
-                        column: x => x.SirketId,
-                        principalTable: "Sirketler",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -231,22 +163,71 @@ namespace Harcama.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "HarcamaTalepleri",
+                name: "Sirketler",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Icerik = table.Column<string>(type: "text", nullable: false),
-                    OnaylandiMi = table.Column<bool>(type: "boolean", nullable: false),
-                    Tarih = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    UserId = table.Column<Guid>(type: "uuid", nullable: false)
+                    SirketAdi = table.Column<string>(type: "text", nullable: false),
+                    SirketKodu = table.Column<string>(type: "text", nullable: false),
+                    Durum = table.Column<bool>(type: "boolean", nullable: false),
+                    Adres = table.Column<string>(type: "text", nullable: false),
+                    TelefonNo = table.Column<string>(type: "text", nullable: false),
+                    AppUserId = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_HarcamaTalepleri", x => x.Id);
+                    table.PrimaryKey("PK_Sirketler", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_HarcamaTalepleri_AspNetUsers_UserId",
-                        column: x => x.UserId,
+                        name: "FK_Sirketler_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
                         principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "HarcamaBirimleri",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    BirimAdi = table.Column<string>(type: "text", nullable: false),
+                    BirimKodu = table.Column<string>(type: "text", nullable: false),
+                    BirimYetkili = table.Column<string>(type: "text", nullable: false),
+                    BirimYetkiliTelefon = table.Column<string>(type: "text", nullable: false),
+                    Durum = table.Column<bool>(type: "boolean", nullable: false),
+                    SirketId = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_HarcamaBirimleri", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_HarcamaBirimleri_Sirketler_SirketId",
+                        column: x => x.SirketId,
+                        principalTable: "Sirketler",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "KullaniciSirketleri",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    KullaniciId = table.Column<Guid>(type: "uuid", nullable: false),
+                    SirketId = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_KullaniciSirketleri", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_KullaniciSirketleri_AspNetUsers_KullaniciId",
+                        column: x => x.KullaniciId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_KullaniciSirketleri_Sirketler_SirketId",
+                        column: x => x.SirketId,
+                        principalTable: "Sirketler",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -277,26 +258,67 @@ namespace Harcama.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "KullaniciSirketleri",
+                name: "ProjeTanimlari",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    KullaniciId = table.Column<Guid>(type: "uuid", nullable: false),
-                    SirketId = table.Column<Guid>(type: "uuid", nullable: false)
+                    ProjeAdi = table.Column<string>(type: "text", nullable: false),
+                    ProjeTanimi = table.Column<string>(type: "text", nullable: false),
+                    ProjeBaslangic = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    ProjeYetkilisi = table.Column<string>(type: "text", nullable: false),
+                    SirketId = table.Column<Guid>(type: "uuid", nullable: false),
+                    BirimId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_KullaniciSirketleri", x => x.Id);
+                    table.PrimaryKey("PK_ProjeTanimlari", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_KullaniciSirketleri_AspNetUsers_KullaniciId",
-                        column: x => x.KullaniciId,
+                        name: "FK_ProjeTanimlari_HarcamaBirimleri_BirimId",
+                        column: x => x.BirimId,
+                        principalTable: "HarcamaBirimleri",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ProjeTanimlari_Sirketler_SirketId",
+                        column: x => x.SirketId,
+                        principalTable: "Sirketler",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "HarcamaTalepleri",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Aciklama = table.Column<string>(type: "text", nullable: false),
+                    Gerekce = table.Column<string>(type: "text", nullable: false),
+                    OnaylandiMi = table.Column<bool>(type: "boolean", nullable: false),
+                    Tarih = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Tutar = table.Column<string>(type: "text", nullable: false),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    ProjeId = table.Column<Guid>(type: "uuid", nullable: false),
+                    ProjeTanimlariId = table.Column<Guid>(type: "uuid", nullable: false),
+                    HarcamaBirimleriId = table.Column<Guid>(type: "uuid", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_HarcamaTalepleri", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_HarcamaTalepleri_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_KullaniciSirketleri_Sirketler_SirketId",
-                        column: x => x.SirketId,
-                        principalTable: "Sirketler",
+                        name: "FK_HarcamaTalepleri_HarcamaBirimleri_HarcamaBirimleriId",
+                        column: x => x.HarcamaBirimleriId,
+                        principalTable: "HarcamaBirimleri",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_HarcamaTalepleri_ProjeTanimlari_ProjeTanimlariId",
+                        column: x => x.ProjeTanimlariId,
+                        principalTable: "ProjeTanimlari",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -333,15 +355,25 @@ namespace Harcama.DataAccess.Migrations
                 column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_SirketId",
-                table: "AspNetUsers",
-                column: "SirketId");
-
-            migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_HarcamaBirimleri_SirketId",
+                table: "HarcamaBirimleri",
+                column: "SirketId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_HarcamaTalepleri_HarcamaBirimleriId",
+                table: "HarcamaTalepleri",
+                column: "HarcamaBirimleriId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_HarcamaTalepleri_ProjeTanimlariId",
+                table: "HarcamaTalepleri",
+                column: "ProjeTanimlariId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_HarcamaTalepleri_UserId",
@@ -377,6 +409,11 @@ namespace Harcama.DataAccess.Migrations
                 name: "IX_ProjeTanimlari_SirketId",
                 table: "ProjeTanimlari",
                 column: "SirketId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Sirketler_AppUserId",
+                table: "Sirketler",
+                column: "AppUserId");
         }
 
         /// <inheritdoc />
@@ -407,19 +444,19 @@ namespace Harcama.DataAccess.Migrations
                 name: "KullaniciSirketleri");
 
             migrationBuilder.DropTable(
-                name: "ProjeTanimlari");
-
-            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "ProjeTanimlari");
 
             migrationBuilder.DropTable(
                 name: "HarcamaBirimleri");
 
             migrationBuilder.DropTable(
                 name: "Sirketler");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
         }
     }
 }

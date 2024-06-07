@@ -15,7 +15,6 @@ namespace Harcama.Entities.Concrete
         public string Soyadi { get; set; }       
         public string Adres {  get; set; }
 
-        //public Guid SirketId { get; set; }
-        //public Sirket Sirket { get; set; }
+        public ICollection<Sirket> Sirket { get; set; }
     }
 }

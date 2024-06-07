@@ -14,5 +14,10 @@ namespace Harcama.Entities.Concrete
         public string BirimYetkili { get; set; }
         public string BirimYetkiliTelefon { get; set; }
         public bool Durum {  get; set; }
+
+        public Guid SirketId { get; set; }
+
+        public Sirket Sirket { get; set; }
+        public ICollection<HarcamaTalepleri> HarcamaTalepleri { get; set;}
     }
 }
