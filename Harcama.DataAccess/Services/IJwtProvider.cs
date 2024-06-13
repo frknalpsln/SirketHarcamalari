@@ -11,7 +11,7 @@ namespace Harcama.DataAccess.Services
 {
     public interface IJwtProvider
     {
-        string CreateToken(AppUser user);
+        Task<string> CreateToken(AppUser user);
         
     }
 }

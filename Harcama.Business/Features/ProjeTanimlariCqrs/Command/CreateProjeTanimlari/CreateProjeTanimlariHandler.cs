@@ -7,7 +7,7 @@ using TS.Result;
 namespace Harcama.Business.Features.ProjeTanimlariCqrs.Command.CreateProjeTanimlari
 {
     internal class CreateProjeTanimlariHandler(
-        IProjeTanimlariServices _projeTanimlariServices,IMapper _mapper): IRequestHandler<CreateProjeTanimlari, Result<string>>
+        IProjeTanimlariServices _projeTanimlariServices, IMapper _mapper) : IRequestHandler<CreateProjeTanimlari, Result<string>>
     {
         public async Task<Result<string>> Handle(CreateProjeTanimlari request, CancellationToken cancellationToken)
         {

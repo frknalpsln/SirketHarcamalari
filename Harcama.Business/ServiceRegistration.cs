@@ -24,7 +24,7 @@ namespace Harcama.Business
             });
 
             services.AddScoped<IHarcamaBirimleriServices, HarcamaBirimleriManager>();
-            services.AddScoped<IHarcamaBirimleriServices, HarcamaBirimleriManager>();
+            services.AddScoped<IHarcamaTalepleriServices, HarcamaTalepleriManager>();
             services.AddScoped<IKullaniciBirimYetkileriServices, KullaniciBirimYetkileriManager>();
             services.AddScoped<IKullaniciSirketleriServices, KullaniciSirketleriManager>();
             services.AddScoped<IProjeTanimlariServices, ProjeTanimlariManager>();

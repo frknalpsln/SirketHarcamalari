@@ -17,11 +17,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\HarcamaTalepleriCqrs\CreateHarcamaTalepleri\" />
-    <Folder Include="Features\HarcamaTalepleriCqrs\GetAllHarcamaTalepleri\" />
-    <Folder Include="Features\HarcamaTalepleriCqrs\GetByIdHarcamaTalepleri\" />
-    <Folder Include="Features\HarcamaTalepleriCqrs\UpdateHarcamaTalepleri\" />
-    <Folder Include="Features\HarcamaTalepleriCqrs\RemoveHarcamaTalepleri\" />
+    <Folder Include="Features\HarcamaTalepleriCqrs\Query\GetAllHarcamaTalepleri\" />
+    <Folder Include="Features\HarcamaTalepleriCqrs\Query\GetByIdHarcamaTalepleri\" />
+    <Folder Include="Features\HarcamaTalepleriCqrs\Query\" />
+    <Folder Include="Features\HarcamaTalepleriCqrs\Command\UpdateHarcamaTalepleri\" />
+    <Folder Include="Features\HarcamaTalepleriCqrs\Command\RemoveHarcamaTalepleri\" />
   </ItemGroup>
 
 </Project>

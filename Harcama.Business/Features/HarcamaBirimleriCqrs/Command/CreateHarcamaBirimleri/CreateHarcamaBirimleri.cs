@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Harcama.Entities.Concrete;
+using MediatR;
 using Microsoft.AspNetCore.Http.HttpResults;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace Harcama.Business.Features.HarcamaBirimleriCqrs.Command.CreateHarcamaBi
         string BirimAdi,
         string BirimKodu,
         string BirimYetkili,
-        string BirimYetkiliTelefon
+        string BirimYetkiliTelefon,
+        Guid SirketId
         ) : IRequest<Result<string>>;
 }

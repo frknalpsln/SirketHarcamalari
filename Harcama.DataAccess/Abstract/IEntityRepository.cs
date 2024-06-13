@@ -1,4 +1,5 @@
 ﻿using Harcama.Entities.Common;
+using Harcama.Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -16,8 +17,9 @@ namespace Harcama.DataAccess.Abstract
         IQueryable<T> GetAll(bool tracking = true);
         IQueryable<T> GetWhere(Expression<Func<T, bool>> method, bool tracking = true);
         Task<T> GetSingleAsync(string id, bool tracking = true);
-
         Task<bool> AddAsync(T model);
+
+        Task<bool> AddRangeAsync(List<T> models);
         bool Remove(T model);
         Task<bool> RemoveAsync(string id);
         bool Update(T model);

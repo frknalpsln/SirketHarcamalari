@@ -25,7 +25,9 @@ internal class LoginCommandHandler(
         {
             return Result<LoginCommandResponse>.Failure("Şifre Yanlış");
         }
-        string token = jwtProvider.CreateToken(appUser);
+        string token =await jwtProvider.CreateToken(appUser);
+        
+
         LoginCommandResponse response = new(token);
 
         return Result<LoginCommandResponse>.Succeed(response);

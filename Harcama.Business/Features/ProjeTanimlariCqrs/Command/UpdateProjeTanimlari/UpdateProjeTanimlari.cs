@@ -15,7 +15,6 @@ namespace Harcama.Business.Features.ProjeTanimlariCqrs.Command.UpdateProjeTaniml
      string ProjeAdi,
      string ProjeTanimi,
      DateTime ProjeBaslangic,
-     string ProjeYetkilisi,
-     Sirket Sirket,
-     HarcamaBirimleri Birim) : IRequest<Result<string>>;
+     string ProjeYetkilisi
+     ) : IRequest<Result<string>>;
 }

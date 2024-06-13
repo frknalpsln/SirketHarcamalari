@@ -1,5 +1,6 @@
 ﻿using Harcama.DataAccess.Services;
 using Harcama.Entities.Concrete;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -14,20 +15,28 @@ namespace Harcama.DataAccess.Services.Concrete
 {
     public class JwtProvider : IJwtProvider
     {
-        public string CreateToken(AppUser user)
+        readonly UserManager<AppUser> _userManager;
+
+        public JwtProvider(UserManager<AppUser> userManager)
         {
+            _userManager = userManager;
+        }
+
+        public async Task<string> CreateToken(AppUser user)
+        {
+           var userRoles =  await _userManager.GetRolesAsync(user);
             List<Claim> claims = new()
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Name, user.Adi),
                 new Claim(ClaimTypes.Surname, user.Soyadi),
                 new Claim("UserName", user.UserName),
-
+                new Claim(ClaimTypes.Role, userRoles.FirstOrDefault()),
             };
             DateTime expires = DateTime.Now.AddDays(1);
 
-            SymmetricSecurityKey securityKey = new(Encoding.UTF8.GetBytes(string.Join("-" , Guid.NewGuid(),Guid.NewGuid(), Guid.NewGuid())));
-            SigningCredentials signingCredentials = new(securityKey , SecurityAlgorithms.HmacSha512);
+            SymmetricSecurityKey securityKey = new(Encoding.UTF8.GetBytes("furkanfurkanfurkanfurkanfurkanfurkanfurkanfurkanfurkanfurkan"));
+            SigningCredentials signingCredentials = new(securityKey , SecurityAlgorithms.HmacSha256);
 
             JwtSecurityToken securityToken = new(
                         issuer: "Furkan Alpaslan",

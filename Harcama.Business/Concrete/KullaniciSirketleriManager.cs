@@ -21,12 +21,30 @@ namespace Harcama.Business.Concrete
 
         public async Task<bool> AddAsync(KullaniciSirketleri kullaniciSirketleri)
         {
-       return  await  _kullaniciSirketleriRepository.AddAsync(kullaniciSirketleri);
+            return await _kullaniciSirketleriRepository.AddAsync(kullaniciSirketleri);
         }
 
+        public async Task<bool> AddRangeAsync(Guid userId, List<Guid> sirketIdList )
+        {
+
+            List<KullaniciSirketleri> kullaniciSirketleriList = new List<KullaniciSirketleri>();
+
+            foreach (var sirketId in sirketIdList)
+            {
+                kullaniciSirketleriList.Add(new KullaniciSirketleri { UserId = userId, SirketId = sirketId });
+            }
+
+            await _kullaniciSirketleriRepository.AddRangeAsync(kullaniciSirketleriList);
+
+
+            return true;
+
+
+
+        }
         public IQueryable<KullaniciSirketleri> GetAll()
         {
-           return _kullaniciSirketleriRepository.GetAll();
+            return _kullaniciSirketleriRepository.GetAll();
         }
 
         public Task<KullaniciSirketleri> GetById(string id)
@@ -34,14 +52,16 @@ namespace Harcama.Business.Concrete
             return _kullaniciSirketleriRepository.GetSingleAsync(id);
         }
 
+
+
         public bool Remove(KullaniciSirketleri kullaniciSirketleri)
         {
-       return     _kullaniciSirketleriRepository.Remove(kullaniciSirketleri);
+            return _kullaniciSirketleriRepository.Remove(kullaniciSirketleri);
         }
 
         public async Task<bool> RemoveAsync(string id)
         {
-         return await   _kullaniciSirketleriRepository.RemoveAsync(id);
+            return await _kullaniciSirketleriRepository.RemoveAsync(id);
         }
 
         public Task<int> SaveAsync()
@@ -51,7 +71,9 @@ namespace Harcama.Business.Concrete
 
         public bool Update(KullaniciSirketleri kullaniciSirketleri)
         {
-        return    _kullaniciSirketleriRepository.Update(kullaniciSirketleri);
+            return _kullaniciSirketleriRepository.Update(kullaniciSirketleri);
         }
+
+        
     }
 }

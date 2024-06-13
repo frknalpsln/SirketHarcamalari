@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Harcama.DataAccess.Migrations
 {
     [DbContext(typeof(HarcamaDbContext))]
-    [Migration("20240607175145_mig1")]
+    [Migration("20240611124751_mig1")]
     partial class mig1
     {
         /// <inheritdoc />
@@ -24,6 +24,51 @@ namespace Harcama.DataAccess.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("AppRoleAppUser", b =>
+                {
+                    b.Property<Guid>("RolesId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("UsersId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("RolesId", "UsersId");
+
+                    b.HasIndex("UsersId");
+
+                    b.ToTable("AppRoleAppUser");
+                });
+
+            modelBuilder.Entity("AppUserHarcamaBirimleri", b =>
+                {
+                    b.Property<Guid>("BirimlerId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("UsersId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("BirimlerId", "UsersId");
+
+                    b.HasIndex("UsersId");
+
+                    b.ToTable("AppUserHarcamaBirimleri");
+                });
+
+            modelBuilder.Entity("AppUserSirket", b =>
+                {
+                    b.Property<Guid>("SirketlerId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("UsersId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("SirketlerId", "UsersId");
+
+                    b.HasIndex("UsersId");
+
+                    b.ToTable("AppUserSirket");
+                });
 
             modelBuilder.Entity("Harcama.Entities.Concrete.AppRole", b =>
                 {
@@ -42,9 +87,6 @@ namespace Harcama.DataAccess.Migrations
                     b.Property<string>("NormalizedName")
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
-
-                    b.Property<DateTime>("OlusturulmaTarihi")
-                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 
@@ -181,20 +223,17 @@ namespace Harcama.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<Guid>("BirimId")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("Gerekce")
                         .IsRequired()
                         .HasColumnType("text");
-
-                    b.Property<Guid?>("HarcamaBirimleriId")
-                        .HasColumnType("uuid");
 
                     b.Property<bool>("OnaylandiMi")
                         .HasColumnType("boolean");
 
                     b.Property<Guid>("ProjeId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("ProjeTanimlariId")
                         .HasColumnType("uuid");
 
                     b.Property<DateTime>("Tarih")
@@ -209,55 +248,13 @@ namespace Harcama.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("HarcamaBirimleriId");
+                    b.HasIndex("BirimId");
 
-                    b.HasIndex("ProjeTanimlariId");
+                    b.HasIndex("ProjeId");
 
                     b.HasIndex("UserId");
 
                     b.ToTable("HarcamaTalepleri");
-                });
-
-            modelBuilder.Entity("Harcama.Entities.Concrete.KullaniciBirimYetkileri", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("BirimId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("KullaniciId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BirimId");
-
-                    b.HasIndex("KullaniciId");
-
-                    b.ToTable("KullaniciBirimYetkileri");
-                });
-
-            modelBuilder.Entity("Harcama.Entities.Concrete.KullaniciSirketleri", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("KullaniciId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("SirketId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("KullaniciId");
-
-                    b.HasIndex("SirketId");
-
-                    b.ToTable("KullaniciSirketleri");
                 });
 
             modelBuilder.Entity("Harcama.Entities.Concrete.ProjeTanimlari", b =>
@@ -273,7 +270,7 @@ namespace Harcama.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("ProjeBaslangic")
+                    b.Property<DateTime>("ProjeBaslangicTarihi")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("ProjeTanimi")
@@ -284,14 +281,9 @@ namespace Harcama.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid>("SirketId")
-                        .HasColumnType("uuid");
-
                     b.HasKey("Id");
 
                     b.HasIndex("BirimId");
-
-                    b.HasIndex("SirketId");
 
                     b.ToTable("ProjeTanimlari");
                 });
@@ -305,9 +297,6 @@ namespace Harcama.DataAccess.Migrations
                     b.Property<string>("Adres")
                         .IsRequired()
                         .HasColumnType("text");
-
-                    b.Property<Guid?>("AppUserId")
-                        .HasColumnType("uuid");
 
                     b.Property<bool>("Durum")
                         .HasColumnType("boolean");
@@ -325,8 +314,6 @@ namespace Harcama.DataAccess.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AppUserId");
 
                     b.ToTable("Sirketler");
                 });
@@ -434,10 +421,55 @@ namespace Harcama.DataAccess.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("AppRoleAppUser", b =>
+                {
+                    b.HasOne("Harcama.Entities.Concrete.AppRole", null)
+                        .WithMany()
+                        .HasForeignKey("RolesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Harcama.Entities.Concrete.AppUser", null)
+                        .WithMany()
+                        .HasForeignKey("UsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("AppUserHarcamaBirimleri", b =>
+                {
+                    b.HasOne("Harcama.Entities.Concrete.HarcamaBirimleri", null)
+                        .WithMany()
+                        .HasForeignKey("BirimlerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Harcama.Entities.Concrete.AppUser", null)
+                        .WithMany()
+                        .HasForeignKey("UsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("AppUserSirket", b =>
+                {
+                    b.HasOne("Harcama.Entities.Concrete.Sirket", null)
+                        .WithMany()
+                        .HasForeignKey("SirketlerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Harcama.Entities.Concrete.AppUser", null)
+                        .WithMany()
+                        .HasForeignKey("UsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Harcama.Entities.Concrete.HarcamaBirimleri", b =>
                 {
                     b.HasOne("Harcama.Entities.Concrete.Sirket", "Sirket")
-                        .WithMany("HarcamaBirimleri")
+                        .WithMany("Birimler")
                         .HasForeignKey("SirketId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -447,13 +479,15 @@ namespace Harcama.DataAccess.Migrations
 
             modelBuilder.Entity("Harcama.Entities.Concrete.HarcamaTalepleri", b =>
                 {
-                    b.HasOne("Harcama.Entities.Concrete.HarcamaBirimleri", null)
-                        .WithMany("HarcamaTalepleri")
-                        .HasForeignKey("HarcamaBirimleriId");
-
-                    b.HasOne("Harcama.Entities.Concrete.ProjeTanimlari", "ProjeTanimlari")
+                    b.HasOne("Harcama.Entities.Concrete.HarcamaBirimleri", "Birim")
                         .WithMany()
-                        .HasForeignKey("ProjeTanimlariId")
+                        .HasForeignKey("BirimId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Harcama.Entities.Concrete.ProjeTanimlari", "Proje")
+                        .WithMany()
+                        .HasForeignKey("ProjeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -463,73 +497,22 @@ namespace Harcama.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("ProjeTanimlari");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Harcama.Entities.Concrete.KullaniciBirimYetkileri", b =>
-                {
-                    b.HasOne("Harcama.Entities.Concrete.HarcamaBirimleri", "Birim")
-                        .WithMany()
-                        .HasForeignKey("BirimId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Harcama.Entities.Concrete.AppUser", "Kullanici")
-                        .WithMany()
-                        .HasForeignKey("KullaniciId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Birim");
 
-                    b.Navigation("Kullanici");
-                });
+                    b.Navigation("Proje");
 
-            modelBuilder.Entity("Harcama.Entities.Concrete.KullaniciSirketleri", b =>
-                {
-                    b.HasOne("Harcama.Entities.Concrete.AppUser", "Kullanici")
-                        .WithMany()
-                        .HasForeignKey("KullaniciId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Harcama.Entities.Concrete.Sirket", "Sirket")
-                        .WithMany()
-                        .HasForeignKey("SirketId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Kullanici");
-
-                    b.Navigation("Sirket");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Harcama.Entities.Concrete.ProjeTanimlari", b =>
                 {
                     b.HasOne("Harcama.Entities.Concrete.HarcamaBirimleri", "Birim")
-                        .WithMany()
+                        .WithMany("Projeler")
                         .HasForeignKey("BirimId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Harcama.Entities.Concrete.Sirket", "Sirket")
-                        .WithMany("ProjeTanimlari")
-                        .HasForeignKey("SirketId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Birim");
-
-                    b.Navigation("Sirket");
-                });
-
-            modelBuilder.Entity("Harcama.Entities.Concrete.Sirket", b =>
-                {
-                    b.HasOne("Harcama.Entities.Concrete.AppUser", null)
-                        .WithMany("Sirket")
-                        .HasForeignKey("AppUserId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -583,21 +566,14 @@ namespace Harcama.DataAccess.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Harcama.Entities.Concrete.AppUser", b =>
-                {
-                    b.Navigation("Sirket");
-                });
-
             modelBuilder.Entity("Harcama.Entities.Concrete.HarcamaBirimleri", b =>
                 {
-                    b.Navigation("HarcamaTalepleri");
+                    b.Navigation("Projeler");
                 });
 
             modelBuilder.Entity("Harcama.Entities.Concrete.Sirket", b =>
                 {
-                    b.Navigation("HarcamaBirimleri");
-
-                    b.Navigation("ProjeTanimlari");
+                    b.Navigation("Birimler");
                 });
 #pragma warning restore 612, 618
         }

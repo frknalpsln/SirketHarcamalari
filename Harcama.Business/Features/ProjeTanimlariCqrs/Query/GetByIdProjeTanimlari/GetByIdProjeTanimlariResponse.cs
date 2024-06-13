@@ -7,9 +7,7 @@ namespace Harcama.Business.Features.ProjeTanimlariCqrs.Query.GetByIdProjeTanimla
      string ProjeTanimi,
      DateTime ProjeBaslangic,
      string ProjeYetkilisi,
-     Sirket Sirket,
-     HarcamaBirimleri Birim
-   
+     Guid BirimId
 
        );
 }

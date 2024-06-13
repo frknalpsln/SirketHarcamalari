@@ -10,9 +10,9 @@ namespace Harcama.Business.Features.ProjeTanimlariCqrs.Query.GetByIdProjeTanimla
     {
         public async Task<Result<GetByIdProjeTanimlariResponse>> Handle(GetByIdProjeTanimlari request, CancellationToken cancellationToken)
         {
-         ProjeTanimlari projeTanimlari =  await   _projeTanimlariServices.GetById(request.Id);
+            ProjeTanimlari projeTanimlari = await _projeTanimlariServices.GetById(request.Id);
 
-            if(projeTanimlari is null)
+            if (projeTanimlari is null)
             {
                 return Result<GetByIdProjeTanimlariResponse>.Failure("Proje Bulunamadı");
             }
@@ -20,12 +20,10 @@ namespace Harcama.Business.Features.ProjeTanimlariCqrs.Query.GetByIdProjeTanimla
             return new GetByIdProjeTanimlariResponse(
                 projeTanimlari.ProjeAdi,
                 projeTanimlari.ProjeTanimi,
-               projeTanimlari.ProjeBaslangic,
-               projeTanimlari.ProjeYetkilisi,
-               projeTanimlari.Sirket,
-               projeTanimlari.Birim
-
-                );
+                projeTanimlari.ProjeBaslangicTarihi,
+                projeTanimlari.ProjeYetkilisi,
+                projeTanimlari.BirimId
+             );
         }
     }
 }

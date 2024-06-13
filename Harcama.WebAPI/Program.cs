@@ -13,8 +13,8 @@ builder.Services.AddDataAccessServices();
 builder.Services.AddBusinessServices();
 builder.Services.AddCors(options => options.AddDefaultPolicy(policy => policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
 builder.Services.AddAuthorizationBuilder();
-
 builder.Services.AddControllers();
+builder.Configuration.SetBasePath(Directory.GetCurrentDirectory());
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -34,5 +34,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 
+await Helper.CreateRoleAsync(app);
 await Helper.CreateUsersAsync(app);
 app.Run();

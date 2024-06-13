@@ -17,16 +17,7 @@ namespace Harcama.Business.Features.Register
         string SifreTekrari,
         string Email,
         string Telefon,
-        string Adres) : IRequest<Result<RegisterCommandResponse>>;
-
-
-    public record RegisterCommandResponse();
-
-    internal class RegisterCommandHandler : IRequestHandler<RegisterCommand, Result<RegisterCommandResponse>>
-    {
-        public Task<Result<RegisterCommandResponse>> Handle(RegisterCommand request, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-    }
+        string Adres,
+        List<Guid> SirketId,
+        List<Guid> BirimId) : IRequest<Result<RegisterCommandResponse>>;
 }

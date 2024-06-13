@@ -17,7 +17,6 @@ namespace Harcama.DataAccess.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    OlusturulmaTarihi = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Name = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(type: "text", nullable: true)
@@ -57,6 +56,22 @@ namespace Harcama.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Sirketler",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    SirketAdi = table.Column<string>(type: "text", nullable: false),
+                    SirketKodu = table.Column<string>(type: "text", nullable: false),
+                    Durum = table.Column<bool>(type: "boolean", nullable: false),
+                    Adres = table.Column<string>(type: "text", nullable: false),
+                    TelefonNo = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Sirketler", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -73,6 +88,30 @@ namespace Harcama.DataAccess.Migrations
                         name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AppRoleAppUser",
+                columns: table => new
+                {
+                    RolesId = table.Column<Guid>(type: "uuid", nullable: false),
+                    UsersId = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AppRoleAppUser", x => new { x.RolesId, x.UsersId });
+                    table.ForeignKey(
+                        name: "FK_AppRoleAppUser_AspNetRoles_RolesId",
+                        column: x => x.RolesId,
+                        principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AppRoleAppUser_AspNetUsers_UsersId",
+                        column: x => x.UsersId,
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -163,25 +202,27 @@ namespace Harcama.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Sirketler",
+                name: "AppUserSirket",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    SirketAdi = table.Column<string>(type: "text", nullable: false),
-                    SirketKodu = table.Column<string>(type: "text", nullable: false),
-                    Durum = table.Column<bool>(type: "boolean", nullable: false),
-                    Adres = table.Column<string>(type: "text", nullable: false),
-                    TelefonNo = table.Column<string>(type: "text", nullable: false),
-                    AppUserId = table.Column<Guid>(type: "uuid", nullable: true)
+                    SirketlerId = table.Column<Guid>(type: "uuid", nullable: false),
+                    UsersId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Sirketler", x => x.Id);
+                    table.PrimaryKey("PK_AppUserSirket", x => new { x.SirketlerId, x.UsersId });
                     table.ForeignKey(
-                        name: "FK_Sirketler_AspNetUsers_AppUserId",
-                        column: x => x.AppUserId,
+                        name: "FK_AppUserSirket_AspNetUsers_UsersId",
+                        column: x => x.UsersId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AppUserSirket_Sirketler_SirketlerId",
+                        column: x => x.SirketlerId,
+                        principalTable: "Sirketler",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -208,50 +249,24 @@ namespace Harcama.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "KullaniciSirketleri",
+                name: "AppUserHarcamaBirimleri",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    KullaniciId = table.Column<Guid>(type: "uuid", nullable: false),
-                    SirketId = table.Column<Guid>(type: "uuid", nullable: false)
+                    BirimlerId = table.Column<Guid>(type: "uuid", nullable: false),
+                    UsersId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_KullaniciSirketleri", x => x.Id);
+                    table.PrimaryKey("PK_AppUserHarcamaBirimleri", x => new { x.BirimlerId, x.UsersId });
                     table.ForeignKey(
-                        name: "FK_KullaniciSirketleri_AspNetUsers_KullaniciId",
-                        column: x => x.KullaniciId,
+                        name: "FK_AppUserHarcamaBirimleri_AspNetUsers_UsersId",
+                        column: x => x.UsersId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_KullaniciSirketleri_Sirketler_SirketId",
-                        column: x => x.SirketId,
-                        principalTable: "Sirketler",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "KullaniciBirimYetkileri",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    KullaniciId = table.Column<Guid>(type: "uuid", nullable: false),
-                    BirimId = table.Column<Guid>(type: "uuid", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_KullaniciBirimYetkileri", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_KullaniciBirimYetkileri_AspNetUsers_KullaniciId",
-                        column: x => x.KullaniciId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_KullaniciBirimYetkileri_HarcamaBirimleri_BirimId",
-                        column: x => x.BirimId,
+                        name: "FK_AppUserHarcamaBirimleri_HarcamaBirimleri_BirimlerId",
+                        column: x => x.BirimlerId,
                         principalTable: "HarcamaBirimleri",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -264,9 +279,8 @@ namespace Harcama.DataAccess.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     ProjeAdi = table.Column<string>(type: "text", nullable: false),
                     ProjeTanimi = table.Column<string>(type: "text", nullable: false),
-                    ProjeBaslangic = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    ProjeBaslangicTarihi = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     ProjeYetkilisi = table.Column<string>(type: "text", nullable: false),
-                    SirketId = table.Column<Guid>(type: "uuid", nullable: false),
                     BirimId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
@@ -276,12 +290,6 @@ namespace Harcama.DataAccess.Migrations
                         name: "FK_ProjeTanimlari_HarcamaBirimleri_BirimId",
                         column: x => x.BirimId,
                         principalTable: "HarcamaBirimleri",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ProjeTanimlari_Sirketler_SirketId",
-                        column: x => x.SirketId,
-                        principalTable: "Sirketler",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -297,9 +305,8 @@ namespace Harcama.DataAccess.Migrations
                     Tarih = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Tutar = table.Column<string>(type: "text", nullable: false),
                     UserId = table.Column<Guid>(type: "uuid", nullable: false),
-                    ProjeId = table.Column<Guid>(type: "uuid", nullable: false),
-                    ProjeTanimlariId = table.Column<Guid>(type: "uuid", nullable: false),
-                    HarcamaBirimleriId = table.Column<Guid>(type: "uuid", nullable: true)
+                    BirimId = table.Column<Guid>(type: "uuid", nullable: false),
+                    ProjeId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -311,17 +318,33 @@ namespace Harcama.DataAccess.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_HarcamaTalepleri_HarcamaBirimleri_HarcamaBirimleriId",
-                        column: x => x.HarcamaBirimleriId,
+                        name: "FK_HarcamaTalepleri_HarcamaBirimleri_BirimId",
+                        column: x => x.BirimId,
                         principalTable: "HarcamaBirimleri",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_HarcamaTalepleri_ProjeTanimlari_ProjeTanimlariId",
-                        column: x => x.ProjeTanimlariId,
+                        name: "FK_HarcamaTalepleri_ProjeTanimlari_ProjeId",
+                        column: x => x.ProjeId,
                         principalTable: "ProjeTanimlari",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AppRoleAppUser_UsersId",
+                table: "AppRoleAppUser",
+                column: "UsersId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AppUserHarcamaBirimleri_UsersId",
+                table: "AppUserHarcamaBirimleri",
+                column: "UsersId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AppUserSirket_UsersId",
+                table: "AppUserSirket",
+                column: "UsersId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -366,14 +389,14 @@ namespace Harcama.DataAccess.Migrations
                 column: "SirketId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_HarcamaTalepleri_HarcamaBirimleriId",
+                name: "IX_HarcamaTalepleri_BirimId",
                 table: "HarcamaTalepleri",
-                column: "HarcamaBirimleriId");
+                column: "BirimId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_HarcamaTalepleri_ProjeTanimlariId",
+                name: "IX_HarcamaTalepleri_ProjeId",
                 table: "HarcamaTalepleri",
-                column: "ProjeTanimlariId");
+                column: "ProjeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_HarcamaTalepleri_UserId",
@@ -381,44 +404,23 @@ namespace Harcama.DataAccess.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_KullaniciBirimYetkileri_BirimId",
-                table: "KullaniciBirimYetkileri",
-                column: "BirimId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_KullaniciBirimYetkileri_KullaniciId",
-                table: "KullaniciBirimYetkileri",
-                column: "KullaniciId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_KullaniciSirketleri_KullaniciId",
-                table: "KullaniciSirketleri",
-                column: "KullaniciId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_KullaniciSirketleri_SirketId",
-                table: "KullaniciSirketleri",
-                column: "SirketId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_ProjeTanimlari_BirimId",
                 table: "ProjeTanimlari",
                 column: "BirimId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ProjeTanimlari_SirketId",
-                table: "ProjeTanimlari",
-                column: "SirketId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Sirketler_AppUserId",
-                table: "Sirketler",
-                column: "AppUserId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "AppRoleAppUser");
+
+            migrationBuilder.DropTable(
+                name: "AppUserHarcamaBirimleri");
+
+            migrationBuilder.DropTable(
+                name: "AppUserSirket");
+
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -438,13 +440,10 @@ namespace Harcama.DataAccess.Migrations
                 name: "HarcamaTalepleri");
 
             migrationBuilder.DropTable(
-                name: "KullaniciBirimYetkileri");
-
-            migrationBuilder.DropTable(
-                name: "KullaniciSirketleri");
-
-            migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "ProjeTanimlari");
@@ -454,9 +453,6 @@ namespace Harcama.DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "Sirketler");
-
-            migrationBuilder.DropTable(
-                name: "AspNetUsers");
         }
     }
 }

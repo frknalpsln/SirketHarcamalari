@@ -13,6 +13,7 @@ namespace Harcama.Business.Abstract
 
         Task<KullaniciSirketleri> GetById(string id);
 
+        Task<bool> AddRangeAsync(Guid userId, List<Guid> sirketIdList);
         Task<bool> AddAsync(KullaniciSirketleri kullaniciSirketleri);
         bool Remove(KullaniciSirketleri kullaniciSirketleri);
         Task<bool> RemoveAsync(string id);

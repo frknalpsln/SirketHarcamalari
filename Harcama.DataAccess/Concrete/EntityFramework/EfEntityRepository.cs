@@ -1,5 +1,6 @@
 ﻿using Harcama.DataAccess.Abstract;
 using Harcama.Entities.Common;
+using Harcama.Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
@@ -24,9 +25,16 @@ namespace Harcama.DataAccess.Concrete.EntityFramework
 
         public async Task<bool> AddAsync(T model)
         {
-           EntityEntry<T> entityEntry = await Table.AddAsync(model);
-         return   entityEntry.State == EntityState.Added;
-            
+            EntityEntry<T> entityEntry = await Table.AddAsync(model);
+            return entityEntry.State == EntityState.Added;
+
+        }
+
+        public async Task<bool> AddRangeAsync(List<T> models)
+        {
+       await Table.AddRangeAsync(models);
+      var a =    await  _context.SaveChangesAsync();
+            return a > 0;
         }
 
         public IQueryable<T> GetAll(bool tracking = true)
@@ -45,12 +53,17 @@ namespace Harcama.DataAccess.Concrete.EntityFramework
             return await query.FirstOrDefaultAsync(d => d.Id == Guid.Parse(id));
         }
 
-        public IQueryable<T> GetWhere(Expression<Func<T, bool>> method, bool tracking = true)
-        {
-            var query = Table.Where(method);
-            if (!tracking)
-                query = query.AsNoTracking();
-            return query;
+        public  IQueryable<T> GetWhere(Expression<Func<T, bool>> method,  bool tracking = true)
+        { 
+           
+            
+                var query = Table.Where(method);
+                if (!tracking)
+                    query = query.AsNoTracking();
+                return query;
+            
+            
+           
         }
 
         public bool Remove(T model)

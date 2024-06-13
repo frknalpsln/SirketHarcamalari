@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using Harcama.Business.Features.HarcamaBirimleriCqrs.Command.CreateHarcamaBirimleri;
 using Harcama.Business.Features.HarcamaBirimleriCqrs.Command.UpdateHarcamaBirimleri;
+using Harcama.Business.Features.HarcamaTalepleriCqrs.Command.CreateHarcamaTalepleri;
 using Harcama.Business.Features.ProjeTanimlariCqrs.Command.CreateProjeTanimlari;
 using Harcama.Business.Features.ProjeTanimlariCqrs.Command.UpdateProjeTanimlari;
+using Harcama.Business.Features.Register;
 using Harcama.Business.Features.SirketCqrs.Command.CreateSirket;
 using Harcama.Business.Features.SirketCqrs.Command.UpdateSirket;
 using Harcama.Entities.Concrete;
@@ -26,6 +28,13 @@ namespace Harcama.Business.Mapping
 
             CreateMap<CreateProjeTanimlari, ProjeTanimlari>();
             CreateMap<UpdateProjeTanimlari, ProjeTanimlari>();
+
+            CreateMap<RegisterCommand, AppUser>()
+                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.KullaniciAdi));
+
+            CreateMap<CreateHarcamaTalepleri,  HarcamaTalepleri>();
         }
     }
+;
 }
+   

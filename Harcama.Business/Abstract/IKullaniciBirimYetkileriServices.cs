@@ -12,6 +12,7 @@ namespace Harcama.Business.Abstract
         IQueryable<KullaniciBirimYetkileri> GetAll();
 
         Task<KullaniciBirimYetkileri> GetById(string id);
+        Task<bool> AddRangeAsync(Guid userId, List<Guid> birimIdList);
 
         Task<bool> AddAsync(KullaniciBirimYetkileri kullaniciBirimYetkileri);
         bool Remove(KullaniciBirimYetkileri kullaniciBirimYetkileri);

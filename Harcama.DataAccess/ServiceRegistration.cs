@@ -30,7 +30,9 @@ namespace Harcama.DataAccess.Concrete
                 action.Password.RequireDigit = false;
             }).AddEntityFrameworkStores<HarcamaDbContext>();
 
+            
 
+           
 
 
             services.AddScoped<IHarcamaBirimleriRepository, EfHarcamaBirimleriRepository>();

@@ -6,36 +6,70 @@ namespace Harcama.WebAPI
 {
     public static class Helper
     {
+        public static async Task CreateRoleAsync(WebApplication app)
+        {
+
+            using (var scoped = app.Services.CreateScope())
+            {
+                var roleManager = scoped.ServiceProvider.GetRequiredService<RoleManager<AppRole>>();
+
+                if (!roleManager.Roles.Any())
+                {
+                    AppRole[] appRoles =
+                    {
+                        new AppRole { Name = "Personel" },
+                        new AppRole { Name = "Admin" },
+                        new AppRole { Name = "Muhasebe" }
+                    };
+                    foreach (var role in appRoles)
+                    {
+                        await roleManager.CreateAsync(role);
+                    };
+                }
+            }
+        }
+
         public static async Task CreateUsersAsync(WebApplication app)
         {
 
             using (var scoped = app.Services.CreateScope())
             {
                 var userManager = scoped.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
+                var roleManager = scoped.ServiceProvider.GetRequiredService<RoleManager<AppRole>>();
 
                 if (!userManager.Users.Any())
                 {
-                    string[][] usersInfo = new string[][]
+                    AppUser admin = new AppUser
                     {
-            new string[] { "Admin", "Admin", "11164004322", "Ankara", "admin@admin.com", "admin", "Admin123" },
-            new string[] { "Muhasebe", "Muhasebe", "11164004323", "Ankara", "muhasebe@muhasebe.com", "muhasebe", "Muhasebe123" }
+                        Adi = "Admin",
+                        Soyadi = "Admin",
+                        Tc = "11164004322",
+                        Adres = "Ankara",
+                        Email = "admin@admin.com",
+                        UserName = "admin",
                     };
 
-                    foreach (var userInfo in usersInfo)
+
+                    AppUser muhasebe = new AppUser
                     {
-                        await userManager.CreateAsync(new AppUser
-                        {
-                            Adi = userInfo[0],
-                            Soyadi = userInfo[1],
-                            Tc = userInfo[2],
-                            Adres = userInfo[3],
-                            Email = userInfo[4],
-                            UserName = userInfo[5]
-                        }, userInfo[6]);
-                    }
+                        Adi = "Muhasebe",
+                        Soyadi = "Muhasebe",
+                        Tc = "11164004322",
+                        Adres = "Ankara",
+                        Email = "muhasebe@muhasebe.com",
+                        UserName = "muhasebe",
+                    };
+                    await userManager.CreateAsync(admin);
+
+                    await userManager.AddToRoleAsync(admin, "Admin");
+                    await userManager.CreateAsync(muhasebe);
+
+                    await userManager.AddToRoleAsync(muhasebe, "Muhasebe");
+
                 }
             }
 
         }
+
     }
 }

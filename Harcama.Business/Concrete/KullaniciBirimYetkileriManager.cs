@@ -24,9 +24,26 @@ namespace Harcama.Business.Concrete
             return await _kullaniciBirimYetkileriRepository.AddAsync(kullaniciBirimYetkileri);
         }
 
+
+        public async Task<bool> AddRangeAsync(Guid userId, List<Guid> birimIdList)
+        {
+
+            List<KullaniciBirimYetkileri> kullaniciBirimYetkileri = new List<KullaniciBirimYetkileri>();
+
+            foreach (var birimId in birimIdList)
+            {
+                kullaniciBirimYetkileri.Add(new KullaniciBirimYetkileri { UserId = userId, BirimId = birimId });
+            }
+
+            await _kullaniciBirimYetkileriRepository.AddRangeAsync(kullaniciBirimYetkileri);
+
+
+            return true;
+        }
+
         public IQueryable<KullaniciBirimYetkileri> GetAll()
         {
-         return   _kullaniciBirimYetkileriRepository.GetAll();
+            return _kullaniciBirimYetkileriRepository.GetAll();
         }
 
         public Task<KullaniciBirimYetkileri> GetById(string id)
@@ -36,12 +53,12 @@ namespace Harcama.Business.Concrete
 
         public bool Remove(KullaniciBirimYetkileri kullaniciBirimYetkileri)
         {
-         return  _kullaniciBirimYetkileriRepository.Remove(kullaniciBirimYetkileri);
+            return _kullaniciBirimYetkileriRepository.Remove(kullaniciBirimYetkileri);
         }
 
         public async Task<bool> RemoveAsync(string id)
         {
-        return await   _kullaniciBirimYetkileriRepository.RemoveAsync(id); 
+            return await _kullaniciBirimYetkileriRepository.RemoveAsync(id);
         }
 
         public Task<int> SaveAsync()
@@ -51,7 +68,7 @@ namespace Harcama.Business.Concrete
 
         public bool Update(KullaniciBirimYetkileri kullaniciBirimYetkileri)
         {
-         return   _kullaniciBirimYetkileriRepository.Update(kullaniciBirimYetkileri);
+            return _kullaniciBirimYetkileriRepository.Update(kullaniciBirimYetkileri);
         }
     }
 }

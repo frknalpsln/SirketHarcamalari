@@ -9,7 +9,6 @@ namespace Harcama.Entities.Concrete
 {
     public class AppRole : IdentityRole<Guid>
     {
-        public DateTime OlusturulmaTarihi { get; set; }
-
+        public ICollection<AppUser> Users { get; set; }
     }
 }
